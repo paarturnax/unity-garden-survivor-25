@@ -23,6 +23,5 @@ public class KeyboardMovement : MonoBehaviour
 
         animator.SetBool("isRun", movement.magnitude > 0f);
         sr.flipX = movement.x < 0f;
-
     }
 }

@@ -4,20 +4,38 @@ using UnityEngine;
 
 public class CollisionReact : MonoBehaviour
 {
-    [SerializeField] private int _health = 3;
+    [SerializeField] public int Health = 5;
+    [SerializeField] private int _damage = 1;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
-            if (_health > 1)
-            {
-                _health -= 1;
-                collision.transform.position = new Vector3(0f, 0f, 0f);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            Destroy(collision.gameObject);
+
+            TakeDamage(_damage);
+            isDead();
+            print(Health);
+        }
+    }
+
+    private void TakeDamage(int damage)
+    {
+        if (damage < Health)
+        {
+            Health -= damage;
+        }
+        else
+        {
+            Health = 0;
+        }
+    }
+
+    private void isDead()
+    {
+        if (Health <= 0)
+        {
+            Application.Quit();
+            Time.timeScale = 0;
         }
     }
 }

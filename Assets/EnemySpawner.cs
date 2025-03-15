@@ -18,9 +18,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        SpawnEnemy();
-        SpawnEnemy();
-        SpawnEnemy();
+        InvokeRepeating(nameof(SpawnEnemy), spawnDelay, spawnDelay);
     }
     private Vector3 GetRandomPos()
     {
