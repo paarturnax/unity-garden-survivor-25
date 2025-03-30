@@ -21,4 +21,9 @@ public class EnemyMovement : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, Player.position, movement);
         _sr.flipX = Player.position.x < transform.position.x;
     }
+
+    private void OnDestroy()
+    {
+        EnemySpawner.Remove(this);
+    }
 }

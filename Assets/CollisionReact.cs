@@ -24,7 +24,18 @@ public class CollisionReact : MonoBehaviour
             isDead();
             print(Health);
         }
+
+        if (collision.gameObject.CompareTag("Trap"))
+        {
+            Destroy(collision.gameObject);
+
+            TakeDamage(2);
+            _hpManager.UpdateHP(Health);
+            isDead();
+        }
     }
+
+
 
     private void TakeDamage(int damage)
     {

@@ -13475,6 +13475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 3243284573220181665, guid: e331f241bacb9e8499b8433a0945b1fe, type: 3}
+  trapPrefab: {fileID: 219148334347821509, guid: 4f5f1fbc8bea5eb42bb3a9295ffbdc0d, type: 3}
   spawnDelay: 3
   xDistance: 16
   yDistance: 9
