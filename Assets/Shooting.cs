@@ -6,11 +6,15 @@ public class Shooting : MonoBehaviour
 {
     // префаб снаряда
     [SerializeField] private GameObject projectile;
+    [SerializeField] private float cooldown;
 
     private float timeToShoot;
+
+    void UpdateTimeToShoot() => timeToShoot = Time.time + cooldown;
+
     void Start()
     {
-        
+        UpdateTimeToShoot();
     }
 
     // Update is called once per frame
@@ -18,8 +22,12 @@ public class Shooting : MonoBehaviour
     {
         if (Time.time > timeToShoot)
         {
-            // нахождение ближайшего
-            // выстрел
+            EnemyMovement zombie = findNearest();
+            if (zombie != null)
+            {
+                Shoot(zombie.transform);
+                UpdateTimeToShoot();
+            }
         }
     }
 
