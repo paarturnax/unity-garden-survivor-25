@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class Shooting : MonoBehaviour
@@ -7,36 +9,45 @@ public class Shooting : MonoBehaviour
     // префаб снаряда
     [SerializeField] private GameObject projectile;
     [SerializeField] private float cooldown;
+    [SerializeField] private int bullets = 10; // патроны
 
     private float timeToShoot;
+    private Camera _camera;
 
     void UpdateTimeToShoot() => timeToShoot = Time.time + cooldown;
 
     void Start()
     {
-        UpdateTimeToShoot();
+        
+        _camera = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.time > timeToShoot)
+        if (bullets > 0 && Input.GetKeyDown(KeyCode.Mouse0))
         {
-            EnemyMovement zombie = findNearest();
-            if (zombie != null)
-            {
-                Shoot(zombie.transform);
-                UpdateTimeToShoot();
-            }
+            Vector3 mousePos = Input.mousePosition;
+            
+            Vector3 point = _camera.ScreenToWorldPoint(mousePos);
+            point.z = 0f;
+            Shoot(point);
+            // EnemyMovement zombie = findNearest();
+            // if (zombie != null)
+            // {
+            //     Shoot(zombie.transform);
+            //     UpdateTimeToShoot();
+            //     bullets -= 1;
+            // }
         }
     }
 
-    private void Shoot(Transform target)
+    private void Shoot(Vector3 target)
     {
         GameObject bullet = Instantiate(projectile);
         
         bullet.transform.position = transform.position;
-        Vector3 direction = target.position - transform.position;
+        Vector3 direction = target - transform.position;
         bullet.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
     }
 

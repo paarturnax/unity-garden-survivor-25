@@ -1,18 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private float _speed;
+    [SerializeField] private int maxHp = 6;
+    [SerializeField] private Slider hpSlider;
+    [SerializeField] private ParticleSystem partSys;
     private SpriteRenderer _sr;
+    private int _hp;
 
     [SerializeField] public Transform Player;
 
     void Start()
     {
         _sr = GetComponent<SpriteRenderer>();
+        _hp = maxHp;
+    }
+
+    public void GetDamage(int damage)
+    {
+        _hp -= damage;
+        hpSlider.value = (float)_hp / maxHp;
+        partSys.Play();
+        if (_hp <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Update()
