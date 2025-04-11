@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using Unity.VisualScripting;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
@@ -13,12 +15,13 @@ public class Shooting : MonoBehaviour
 
     private float timeToShoot;
     private Camera _camera;
+    private SpriteRenderer _sr;
 
     void UpdateTimeToShoot() => timeToShoot = Time.time + cooldown;
 
     void Start()
     {
-        
+        _sr = GetComponent<SpriteRenderer>();
         _camera = Camera.main;
     }
 
@@ -49,6 +52,9 @@ public class Shooting : MonoBehaviour
         bullet.transform.position = transform.position;
         Vector3 direction = target - transform.position;
         bullet.transform.rotation = Quaternion.FromToRotation(Vector3.up, direction);
+        transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
+        _sr.flipY = Math.Abs(transform.rotation.z) > 0.5f;
+        
     }
 
     private EnemyMovement findNearest()
