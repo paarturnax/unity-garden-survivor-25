@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MouseShooting : MonoBehaviour
 {
     [SerializeField] private GameObject projectile;
-    [SerializeField] private int bullets = 10;
+    [SerializeField] private int bullets = 25;
     [SerializeField] private Camera _camera;
+
+    [SerializeField] private TextMeshProUGUI ammoCount;
 
     private SpriteRenderer _sr;
 
     void Start()
     {
         _sr = GetComponent<SpriteRenderer>();
+    }
+
+    private void UpdateAmmoCount(int value)
+    {
+        ammoCount.text = $"bulets: {value}";
     }
 
     private void Shoot(Vector3 target)
@@ -26,6 +34,12 @@ public class MouseShooting : MonoBehaviour
         _sr.flipY = Mathf.Abs(transform.rotation.z) > 0.5f;
     }
 
+    public void PickUpAmmo()
+    {
+        bullets += 25;
+        UpdateAmmoCount(bullets);
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -36,6 +50,8 @@ public class MouseShooting : MonoBehaviour
                 Vector3 point = _camera.ScreenToWorldPoint(MousePos);
                 point.z = 0f;
                 Shoot(point);
+                bullets --;
+                UpdateAmmoCount(bullets);
             }
         }
     }

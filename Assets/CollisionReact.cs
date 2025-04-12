@@ -13,6 +13,8 @@ public class CollisionReact : MonoBehaviour
     // ссылка на панель геймовер
     [SerializeField] private GameObject _gameOverPanel;
 
+    [SerializeField] private MouseShooting gun;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("Enemy"))
@@ -32,6 +34,12 @@ public class CollisionReact : MonoBehaviour
             TakeDamage(2);
             _hpManager.UpdateHP(Health);
             isDead();
+        }
+
+        if (collision.gameObject.CompareTag("Ammo"))
+        {
+            Destroy(collision.gameObject);
+            gun.PickUpAmmo();
         }
     }
 

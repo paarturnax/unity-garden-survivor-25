@@ -10,6 +10,7 @@ public class EnemyMovement : MonoBehaviour
     private int hp;
 
     [SerializeField] public Transform Player;
+    [SerializeField] public GameObject ammobox;
 
     void Start()
     {
@@ -39,5 +40,10 @@ public class EnemyMovement : MonoBehaviour
     private void OnDestroy()
     {
         EnemySpawner.Remove(this);
+        if (Random.Range(0, 9) == 1)
+        {
+            GameObject ammo = Instantiate(ammobox);
+            ammo.transform.position = transform.position;
+        }
     }
 }
