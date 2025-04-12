@@ -7,12 +7,14 @@ public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private float _speed;
     private SpriteRenderer _sr;
+    private int hp;
 
     [SerializeField] public Transform Player;
 
     void Start()
     {
         _sr = GetComponent<SpriteRenderer>();
+        hp = 3;
     }
 
     void Update()
@@ -20,6 +22,18 @@ public class EnemyMovement : MonoBehaviour
         float movement = _speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, Player.position, movement);
         _sr.flipX = Player.position.x < transform.position.x;
+    }
+
+    public void GetDamage(int damage)
+    {
+        if (hp > damage)
+        {
+            hp -= damage;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnDestroy()
