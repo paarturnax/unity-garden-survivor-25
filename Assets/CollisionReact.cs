@@ -13,6 +13,9 @@ public class CollisionReact : MonoBehaviour
     // ссылка на панель геймовер
     [SerializeField] private GameObject _gameOverPanel;
 
+    // ссылка на объект класса MouseShooting для того чтобы через него вызва метод PickAmmo
+    [SerializeField] private MouseShooting gun;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("Enemy"))
@@ -25,13 +28,13 @@ public class CollisionReact : MonoBehaviour
             print(Health);
         }
 
-        if (collision.gameObject.CompareTag("Trap"))
+        if (collision.gameObject.CompareTag("AmmoBox"))
         {
             Destroy(collision.gameObject);
-
-            TakeDamage(2);
-            _hpManager.UpdateHP(Health);
-            isDead();
+            // пополнение патронов
+            int bullets = Random.Range(15, 30);
+            gun.PickAmmo(bullets);
+            print(bullets);
         }
     }
 

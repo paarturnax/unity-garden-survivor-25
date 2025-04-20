@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [SerializeField] private GameObject ammoBoxPrefab;
     [SerializeField] private float _speed;
     private SpriteRenderer _sr;
     private int hp;
@@ -39,5 +40,11 @@ public class EnemyMovement : MonoBehaviour
     private void OnDestroy()
     {
         EnemySpawner.Remove(this);
+
+        if (Random.Range(0, 8) == 1)
+        {
+            GameObject box = Instantiate(ammoBoxPrefab);
+            box.transform.position = transform.position;
+        }
     }
 }

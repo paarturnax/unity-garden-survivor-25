@@ -7,12 +7,20 @@ public class MouseShooting : MonoBehaviour
     [SerializeField] private GameObject projectile;
     [SerializeField] private int bullets = 10;
     [SerializeField] private Camera _camera;
+    [SerializeField] private BulletsUIManeger bulletsUI;
 
     private SpriteRenderer _sr;
+
+    public void PickAmmo(int bulletsCount)
+    {
+        bullets += bulletsCount;
+        bulletsUI.UpdateBulletsUI(bullets);
+    }
 
     void Start()
     {
         _sr = GetComponent<SpriteRenderer>();
+        bulletsUI.UpdateBulletsUI(bullets);
     }
 
     private void Shoot(Vector3 target)
@@ -36,6 +44,9 @@ public class MouseShooting : MonoBehaviour
                 Vector3 point = _camera.ScreenToWorldPoint(MousePos);
                 point.z = 0f;
                 Shoot(point);
+
+                bullets--;
+                bulletsUI.UpdateBulletsUI(bullets);
             }
         }
     }
